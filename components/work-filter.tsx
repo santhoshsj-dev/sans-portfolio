@@ -15,9 +15,9 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
     return matchesFilter && `${project.title} ${project.category}`.toLowerCase().includes(query.toLowerCase());
   }), [active, query, projects]);
 
-  return <div className="work-index">
-    <div className="work-tools"><label className="search-box"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" aria-label="Search projects" /></label><div className="filter-list" role="group" aria-label="Filter projects">{filters.map((filter) => <button key={filter} type="button" className={active === filter ? "active" : ""} aria-pressed={active === filter} onClick={() => setActive(filter)}>{filter}</button>)}</div></div>
-    <p className="results-count">SHOWING {String(visible.length).padStart(2, "0")} PROJECT{visible.length === 1 ? "" : "S"}</p>
-    {visible.length ? <div className="project-grid">{visible.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div> : <p className="empty-results">No projects match that search. Try another term.</p>}
+  return <div className="work-filter">
+    <div className="work-filter__tools"><label className="work-filter__search-box"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" aria-label="Search projects" /></label><div className="work-filter__filter-list" role="group" aria-label="Filter projects">{filters.map((filter) => <button key={filter} type="button" className={`work-filter__chip${active === filter ? " work-filter__chip--active" : ""}`} aria-pressed={active === filter} onClick={() => setActive(filter)}>{filter}</button>)}</div></div>
+    <p className="work-filter__results-count">SHOWING {String(visible.length).padStart(2, "0")} PROJECT{visible.length === 1 ? "" : "S"}</p>
+    {visible.length ? <div className="project-list__grid">{visible.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div> : <p className="work-filter__empty-results">No projects match that search. Try another term.</p>}
   </div>;
 }

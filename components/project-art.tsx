@@ -10,8 +10,8 @@ const crop: Record<Project["palette"], string> = {
 
 export function ProjectArt({ project, compact = false, priority = false }: { project: Project; compact?: boolean; priority?: boolean }) {
   const style = { "--art-position": crop[project.palette] } as CSSProperties;
-  return <div className={`project-art art-${project.palette}${compact ? " is-compact" : ""}`} role="img" aria-label={`${project.title} editorial concept visual`} style={style}>
-    <span className="art-index">SAN / SELECTED WORK {project.number}</span>
-    <span className="art-note">{priority ? "CONCEPT VISUAL" : "EDITORIAL CONCEPT"}</span>
+  return <div className={`project-art project-art--${project.palette}${compact ? " project-art--compact" : ""}`} role="img" aria-label={`${project.title} editorial concept visual`} style={style}>
+    <span className="project-art__index">SAN / SELECTED WORK {project.number}</span>
+    <span className="project-art__note">{priority ? "CONCEPT VISUAL" : "EDITORIAL CONCEPT"}</span>
   </div>;
 }
