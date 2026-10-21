@@ -4064,3 +4064,25 @@ body {
     padding-block: 0;
   }
 }
+
+/* Keep the shared navigation pinned while reserving its space in page flow. */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+}
+
+main {
+  padding-top: 53px;
+}
+
+@media (max-width: 650px) {
+  [data-scroll-reveal],
+  [data-scroll-reveal="pending"],
+  [data-scroll-reveal="visible"] {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}
