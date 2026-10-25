@@ -9,6 +9,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import Image from "next/image";
 import { createPortal } from "react-dom";
 import { useLenis } from "lenis/react";
 
@@ -32,7 +33,7 @@ export function ScrollMorphImage({
 }) {
   const source = useRef<HTMLDivElement>(null);
   const destination = useRef<HTMLDivElement>(null);
-  const image = useRef<HTMLImageElement>(null);
+  const image = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const [mounted, setMounted] = useState(false);
 
@@ -93,14 +94,12 @@ export function ScrollMorphImage({
       {children}
       {mounted &&
         createPortal(
-          <img
+          <div
             ref={image}
             className="home__scroll-morph-image"
-            src={src}
-            alt={alt}
-            data-scroll-reveal="visible"
-            draggable={false}
-          />,
+          >
+            <Image src={src} alt={alt} fill sizes="100vw" draggable={false} />
+          </div>,
           document.body,
         )}
     </MorphContext.Provider>

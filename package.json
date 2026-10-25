@@ -14,6 +14,7 @@
     "next": "16.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "smooothy": "^0.0.35",
     "swiper": "^12.0.3"
   },
   "devDependencies": {

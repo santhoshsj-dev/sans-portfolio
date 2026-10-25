@@ -1,6 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 import { AnimatedLabel } from "@/components/animated-label";
+import { FooterRouteLink } from "@/components/footer-route-link";
+import { ImageReveal } from "@/components/image-reveal";
 
 /* eslint @next/next/no-img-element: "off" */
 
@@ -12,18 +13,20 @@ export function SiteFooter() {
         role="img"
         aria-label="A crowd at a live event"
       >
-        <Image src="/figma-home/footer.png" alt="" fill sizes="100vw" />
+        <ImageReveal fill>
+          <Image src="/figma-home/footer.png" alt="" fill sizes="100vw" />
+        </ImageReveal>
       </div>
       <nav className="site-footer__nav" aria-label="Footer navigation">
-        <Link href="/about" aria-label="About">
+        <FooterRouteLink href="/about" aria-label="About">
           <AnimatedLabel>ABOUT</AnimatedLabel>
-        </Link>
-        <Link href="/works" aria-label="Work">
+        </FooterRouteLink>
+        <FooterRouteLink href="/works" aria-label="Work">
           <AnimatedLabel>WORK</AnimatedLabel>
-        </Link>
-        <Link href="/contact" aria-label="Contact">
+        </FooterRouteLink>
+        <FooterRouteLink href="/contact" aria-label="Contact">
           <AnimatedLabel>CONTACT</AnimatedLabel>
-        </Link>
+        </FooterRouteLink>
       </nav>
       <div className="site-footer__body">
         <div className="site-footer__social">
@@ -97,13 +100,13 @@ export function SiteFooter() {
           © {new Date().getFullYear()} SANS. ALL RIGHTS RESERVED.
         </div>
       </div>
-      <Link
+      <FooterRouteLink
         className="site-footer__brand-band"
         href="/"
         aria-label="Back to top"
       >
         <img src="/figma-home/name.svg" alt="sans." />
-      </Link>
+      </FooterRouteLink>
     </footer>
   );
 }

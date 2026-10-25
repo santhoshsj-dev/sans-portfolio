@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { AnimatedLabel } from "@/components/animated-label";
 
 const email = "santhoshsekar2903@gmail.com";
 
@@ -28,15 +27,16 @@ export function ContactForm() {
     setSent(true);
   }
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      <label>Name<input name="name" autoComplete="name" placeholder="Your name" required /></label>
-      <label>Email<input name="email" type="email" autoComplete="email" placeholder="you@example.com" required /></label>
-      <label className="contact-form__phone-field">Phone<input name="phone" type="tel" autoComplete="tel" placeholder="Your phone number" /></label>
-      <label>Message<textarea name="message" rows={4} placeholder="Tell me a little about your project…" required /></label>
+    <form className="contact-form" onSubmit={handleSubmit} noValidate autoComplete="off">
+      <label>NAME*<input name="name" autoComplete="off" required /></label>
+      <label>EMAIL*<input name="email" type="email" autoComplete="off" required /></label>
+      <label className="contact-form__phone-field">PHONE*<input name="phone" type="tel" autoComplete="off" /></label>
+      <label>MESSAGE*<textarea name="message" rows={4} required /></label>
       {error && <p className="contact-form__message" role="alert">{error}</p>}
       {sent && <p className="contact-form__message" role="status">Your email app should open with a draft ready to send.</p>}
-      <button className="button button--dark" type="submit" aria-label="Send message"><AnimatedLabel>SEND MESSAGE</AnimatedLabel><span>↗</span></button>
-      <p className="contact-form__footnote">This form opens your email app with a prefilled message.</p>
+      <div className="contact-form__submit-row">
+        <button className="button button--dark" type="submit">SUBMIT</button>
+      </div>
     </form>
   );
 }

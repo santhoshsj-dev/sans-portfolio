@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { ScrollRevealController } from "@/components/scroll-reveal-controller";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
@@ -22,7 +21,6 @@ export default function RootLayout({
     <html lang="en" data-scroll-behavior="smooth">
       <body id="top">
         <SmoothScroll>
-          <ScrollRevealController />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

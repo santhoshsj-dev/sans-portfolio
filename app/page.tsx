@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedLabel } from "@/components/animated-label";
 import { FigmaHomeCarousel } from "@/components/figma-home-carousel";
+import { HomeWorkMarquee } from "@/components/home-work-marquee";
+import { ImageReveal } from "@/components/image-reveal";
 import { ScrollMorphImage, ScrollMorphSlot } from "@/components/scroll-morph-image";
 
 /* eslint @next/next/no-img-element: "off" */
@@ -37,20 +39,24 @@ export default function HomePage() {
     <div className="home">
       <section className="home__hero" aria-label="Santhosh S. portfolio">
         <div className="home__hero-photos">
-          <Image
-            src="/figma-home/hero-left.png"
-            alt="Two figures standing by the sea"
-            fill
-            priority
-            sizes="(max-width: 700px) 70vw, 70vw"
-          />
-          <Image
-            src="/figma-home/hero-right.png"
-            alt="A solitary figure at the coast"
-            fill
-            priority
-            sizes="(max-width: 700px) 30vw, 30vw"
-          />
+          <ImageReveal fill className="home__hero-photo home__hero-photo--left">
+            <Image
+              src="/figma-home/hero-left.png"
+              alt="Two figures standing by the sea"
+              fill
+              priority
+              sizes="(max-width: 700px) 70vw, 70vw"
+            />
+          </ImageReveal>
+          <ImageReveal fill staggerIndex={1} className="home__hero-photo home__hero-photo--right">
+            <Image
+              src="/figma-home/hero-right.png"
+              alt="A solitary figure at the coast"
+              fill
+              priority
+              sizes="(max-width: 700px) 30vw, 30vw"
+            />
+          </ImageReveal>
         </div>
         <div className="home__identity">
           <h1 className="home__hero-wordmark">
@@ -95,7 +101,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <main className="home__content">
+      <div className="home__content">
         <section className="home__section home__designer">
           <header className="home__section-heading">
             <span>THE</span>
@@ -128,21 +134,7 @@ export default function HomePage() {
             <h2>works.</h2>
           </header>
           <FigmaHomeCarousel />
-          <Link
-            href="/works"
-            className="home__work-marquee"
-            aria-label="View all works"
-          >
-            <span className="home__marquee-track" aria-hidden="true">
-              {[0, 1].map((group) => (
-                <span className="home__marquee-group" key={group}>
-                  {Array.from({ length: 8 }, (_, i) => (
-                    <span key={i}>/　 VIEW ALL WORKS</span>
-                  ))}
-                </span>
-              ))}
-            </span>
-          </Link>
+          <HomeWorkMarquee />
         </section>
 
         <section className="home__section home__services">
@@ -159,14 +151,14 @@ export default function HomePage() {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <div className="home__service-image">
+                <ImageReveal className="home__service-image" staggerIndex={services.indexOf(service)}>
                   <Image
                     src={service.image}
                     alt={service.alt}
                     fill
                     sizes="(max-width: 700px) 33vw, 30vw"
                   />
-                </div>
+                </ImageReveal>
               </article>
             ))}
           </div>
@@ -184,17 +176,17 @@ export default function HomePage() {
                 <AnimatedLabel>CONTACT ME</AnimatedLabel>
               </Link>
             </div>
-            <div className="home__contact-image">
+            <ImageReveal className="home__contact-image">
               <Image
                 src="/figma-home/contact.png"
                 alt="A quiet moment overlooking the city"
                 fill
                 sizes="(max-width: 700px) 100vw, 58vw"
               />
-            </div>
+            </ImageReveal>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

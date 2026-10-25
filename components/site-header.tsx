@@ -87,7 +87,6 @@ export function SiteHeader() {
             id="primary-navigation"
             className="site-menu"
             aria-label="Main navigation"
-            data-no-scroll-reveal
           >
             <div className="site-menu__header">
               <button
