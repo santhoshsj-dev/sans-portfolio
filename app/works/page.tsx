@@ -3,17 +3,20 @@ import { ShowreelPlayer } from "@/components/showreel-player";
 import { FigmaWorksGallery } from "@/components/figma-works-gallery";
 import { FigmaPageCallout } from "@/components/figma-page-callout";
 import { FigmaPageHero } from "@/components/figma-page-hero";
+import { getProjects, getSiteContent } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Works" };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const [content, projects] = await Promise.all([getSiteContent(), getProjects()]);
+  const { works } = content;
   return (
     <div className="figma-page figma-works">
       <FigmaPageHero
         titleId="works-title"
-        title="Works"
-        imageSrc="/figma-home/hero-right.png"
-        imageAlt="A quiet, foggy landscape"
+        title={works.heroTitle}
+        imageSrc={works.heroImage}
+        imageAlt={works.heroImageAlt}
         imageSizes="(max-width: 600px) 100vw, 41vw"
         priority
       />
@@ -21,12 +24,12 @@ export default function WorkPage() {
         className="figma-works__reel"
         aria-labelledby="works-showreel-title"
       >
-        <h2 id="works-showreel-title">Showreel</h2>
-        <ShowreelPlayer />
+        <h2 id="works-showreel-title">{works.showreelTitle}</h2>
+        <ShowreelPlayer videoUrl={works.showreelUrl} thumbnail={works.showreelThumbnail || undefined} />
       </section>
       <section className="figma-works__projects">
-        <h2>the rest.</h2>
-        <FigmaWorksGallery />
+        <h2>{works.projectsTitle}</h2>
+        <FigmaWorksGallery projects={projects} filters={works.filters} />
       </section>
       <FigmaPageCallout />
     </div>

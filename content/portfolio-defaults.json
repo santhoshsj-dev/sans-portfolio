@@ -1,0 +1,73 @@
+{
+  "projects": [
+    {
+      "slug": "kriti-herbals", "title": "Kriti Herbals", "category": "Performance campaign", "client": "Drig Digital", "year": "2026", "role": "Concept, scripting & motion design", "services": ["Meta ads", "Motion graphics", "Campaign adaptation"], "summary": "Turning a herbal brand story into a performance-led campaign.", "outcome": "10× revenue from the reel campaign · 5× from a static creative", "description": "A complete reel campaign for a D2C herbal brand, from the visual concept through scripting, editing, and regional-language adaptations. The campaign became a top-performing creative on the Meta ad account. A companion static ad also delivered a strong result.", "palette": "red", "number": "01", "featured": true
+    },
+    {
+      "slug": "ilaiyaraaja-live", "title": "Ilaiyaraaja Live", "category": "Live event identity", "client": "Drig Digital", "year": "2025", "role": "Creative lead", "services": ["Event identity", "Stage visuals", "Social campaign", "Print"], "summary": "A complete visual world for a live concert in Bengaluru.", "outcome": "2M+ campaign reach · 20,000+ attendees", "description": "Led design execution across event identity, stage visuals, social campaign, promotional reels, and print collateral, coordinating a cross-functional creative team through a live-event production timeline.", "palette": "ink", "number": "02", "featured": true
+    },
+    {
+      "slug": "dehab-india", "title": "Dehab India", "category": "Brand & social", "client": "Freelance", "year": "2026", "role": "Creative partner", "services": ["Social content", "Packaging", "Print collateral"], "summary": "A cohesive creative direction across content and packaging.", "outcome": "A hero creative delivered a 15× sales uplift", "description": "End-to-end creative production for a D2C brand, spanning social media content, packaging design, and print collateral. A hero creative set the visual direction for the brand’s ongoing content strategy.", "palette": "orange", "number": "03", "featured": true
+    },
+    {
+      "slug": "manoranganz-events", "title": "Manoranganz Events", "category": "Event design", "client": "Freelance", "year": "2024 — Present", "role": "Design partner", "services": ["Event identity", "Environmental graphics", "Print"], "summary": "A flexible event design system made for many kinds of gathering.", "outcome": "Creative delivered across 60+ offline events", "description": "An ongoing design partnership supporting corporate gatherings, marathons, reunions, team outings, and sports events across India. Deliverables include banners, standees, stage backdrops, brochures, arches, entry points, and event identity systems.", "palette": "cream", "number": "04", "featured": true
+    }
+  ],
+  "siteContent": {
+    "home": {
+      "roles": ["Digital design", "Development", "Print design"],
+      "heroLeftImage": "/figma-home/hero-left.png", "heroLeftImageAlt": "Two figures standing by the sea",
+      "heroRightImage": "/figma-home/hero-right.png", "heroRightImageAlt": "A solitary figure at the coast",
+      "carouselPortrait": "/figma-home/standing-portrait.png",
+      "introText": "I’m Santhosh, a Chennai-based graphic and motion designer. I create clear, characterful visual stories across brand identity, campaigns, social and live events.",
+      "introImage": "/figma-home/introduction.png",
+      "introImageAlt": "Santhosh in a cinematic black-and-white portrait",
+      "services": [
+        { "title": "Brand & visual identity", "items": ["Brand identity", "Art direction", "Packaging", "Campaigns"], "image": "/figma-home/service-design.png", "imageAlt": "Visual identity and brand design work" },
+        { "title": "Social & campaigns", "items": ["Social content", "Performance creative", "Motion graphics", "Campaign adaptation"], "image": "/figma-home/service-development.png", "imageAlt": "Digital campaign work on a screen" },
+        { "title": "Motion & live experiences", "items": ["Event identity", "Stage visuals", "Live events", "Editorial"], "image": "/figma-home/service-print.png", "imageAlt": "Live event design and print work" }
+      ]
+    },
+    "about": {
+      "heroEyebrow": "THE", "heroTitle": "designer.", "heroImage": "/figma-home/hero-right.png", "heroImageAlt": "A quiet, foggy landscape",
+      "introLabel": "Hi, I’m Santhosh", "introTitle": "This is me.", "introHeadline": "Your friendly neighborhood designer.",
+      "bio": "I'm a 25-year-old web developer based in Brisbane, Australia. My path started in UX design, eventually graduating from QUT with a Bachelor of Design in Interaction Design but somewhere between wireframing a button and wondering how it actually worked, I fell down the development rabbit hole and never climbed back out.",
+      "bioImage": "/figma-home/introduction.png", "bioImageAlt": "Santhosh",
+      "collage": [
+        { "image": "/figma-pages/about/bird.png", "alt": "Illustrated bird" },
+        { "image": "/figma-pages/about/portrait.png", "alt": "Portrait" },
+        { "image": "/figma-pages/about/silhouette.png", "alt": "Silhouette" }
+      ],
+      "experienceLabel": "EXPERIENCE", "experienceHeadline": "I’m very wise.",
+      "experience": [
+        { "date": "Aug 2026 - Present", "role": "Creative Designer", "company": "CureFit", "companyUrl": "https://www.cult.fit/", "place": "Bangalore", "type": "Full-time" },
+        { "date": "Jan 2022 - Present", "role": "Freelance Designer", "company": "Various Clients", "place": "Remote", "type": "Contract" },
+        { "date": "Apr 2024 - Jul 2026", "role": "Graphic Designer", "company": "Drig Digital", "companyUrl": "https://www.drig.digital/", "place": "Chennai", "type": "Full-time" },
+        { "date": "Nov 2023 - Apr 2024", "role": "Graphic Designer - Intern", "company": "Race Innovations", "companyUrl": "https://raceinnovations.in/", "place": "Chennai", "type": "Part-time" }
+      ]
+    },
+    "works": {
+      "heroTitle": "Works", "heroImage": "/figma-home/hero-right.png", "heroImageAlt": "A quiet, foggy landscape",
+      "showreelTitle": "Showreel", "showreelUrl": "https://www.youtube.com/watch?v=BXMTxpWmhIw", "showreelThumbnail": null,
+      "projectsTitle": "the rest.", "filters": ["Printable", "WordPress", "Framer", "Illustrations", "Web Design", "Motion Graphics", "Social Media"]
+    },
+    "contact": {
+      "heroEyebrow": "DON’T BE SHY", "heroTitle": "contact\nme.", "heroImage": "/figma-home/hero-right.png", "heroImageAlt": "A quiet, foggy landscape",
+      "formTitle": "say hello.", "nameLabel": "NAME*", "emailLabel": "EMAIL*", "phoneLabel": "PHONE*", "messageLabel": "MESSAGE*", "submitLabel": "SUBMIT"
+    },
+    "global": {
+      "contactEmail": "designerdotsans@gmail.com",
+      "menuPrompt": "HAVE A PROJECT IN MIND?",
+      "menuCta": "LET’S TALK ↗",
+      "workMarqueeLabel": "VIEW ALL WORKS",
+      "calloutEyebrow": "WANT TO", "calloutTitle": "chat.", "calloutText": "Got a project in mind? I'd love to hear about it.", "calloutLinkLabel": "CONTACT ME", "calloutImage": "/figma-home/contact.png", "calloutImageAlt": "A candid creative portrait",
+      "footerImage": "/figma-home/footer.png",
+      "socialLinks": [
+        { "label": "INSTAGRAM", "url": "https://www.instagram.com/sandy___sj" },
+        { "label": "LINKEDIN", "url": "https://www.linkedin.com/in/santhoshsj/" },
+        { "label": "YOUTUBE", "url": "https://www.youtube.com/@designersans" },
+        { "label": "X", "url": "https://x.com/designersans" }
+      ]
+    }
+  }
+}

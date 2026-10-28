@@ -1,8 +1,35 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import { ReactLenis, useLenis } from "lenis/react";
 import { useReducedMotion } from "framer-motion";
-import { useEffect, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
+
+function RouteScrollReset() {
+  const pathname = usePathname();
+  const lenis = useLenis();
+  const previousPathname = useRef(pathname);
+
+  const scrollToTop = useCallback(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [lenis]);
+
+  useEffect(() => {
+    if (previousPathname.current === pathname) return;
+    previousPathname.current = pathname;
+
+    const frame = window.requestAnimationFrame(() => {
+      scrollToTop();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname, scrollToTop]);
+
+  return null;
+}
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -25,9 +52,17 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  if (reduce) return <>{children}</>;
+  if (reduce) {
+    return (
+      <>
+        <RouteScrollReset />
+        {children}
+      </>
+    );
+  }
   return (
-    <ReactLenis root options={{ autoRaf: true, anchors: true, lerp: 0.09, duration: 1.1, smoothWheel: true }}>
+    <ReactLenis root options={{ autoRaf: true, anchors: true, lerp: 0.09, duration: 1.1, smoothWheel: true, stopInertiaOnNavigate: true }}>
+      <RouteScrollReset />
       {children}
     </ReactLenis>
   );

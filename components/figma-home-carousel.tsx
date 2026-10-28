@@ -13,12 +13,12 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import type { CoreConfig } from "smooothy";
-import { projects } from "@/lib/projects";
+import type { Project } from "@/lib/projects";
 import { AnimatedLabel } from "@/components/animated-label";
 import { ImageReveal } from "@/components/image-reveal";
 import { useSmooothy } from "@/components/use-smooothy";
 
-export function FigmaHomeCarousel() {
+export function FigmaHomeCarousel({ projects, portraitImage }: { projects: Project[]; portraitImage: string }) {
   const [active, setActive] = useState(0);
   const stackRef = useRef<HTMLDivElement>(null);
   const reducedMotionRef = useRef(false);
@@ -148,10 +148,12 @@ export function FigmaHomeCarousel() {
     const project = projects[index];
     const featured = index === 0;
     const inactive = index !== active;
+    const imageSrc = project.cardImage || project.coverImage ||
+      (featured ? "/figma-home/selected-project.png" : `/projects/${project.slug}.svg`);
 
     return (
       <div
-        className="home__project-panel"
+        className={`home__project-panel${inactive ? "" : " home__project-panel--active"}`}
         key={project.slug}
         aria-hidden={inactive}
         aria-live={inactive ? undefined : "polite"}
@@ -181,21 +183,13 @@ export function FigmaHomeCarousel() {
           tabIndex={inactive ? -1 : undefined}
         >
           <ImageReveal fill>
-            {featured ? (
-              <Image
-                src="/figma-home/selected-project.png"
-                alt="A creative workspace photographed for the selected project"
-                fill
-                sizes="(max-width: 700px) 100vw, 60vw"
-              />
-            ) : (
-              <Image
-                src={`/projects/${project.slug}.svg`}
-                alt={`${project.title} project artwork`}
-                fill
-                sizes="(max-width: 700px) 100vw, 60vw"
-              />
-            )}
+            <Image
+              src={imageSrc}
+              alt={`${project.title} project artwork`}
+              fill
+              unoptimized={imageSrc.endsWith(".svg")}
+              sizes="(max-width: 700px) 100vw, 60vw"
+            />
           </ImageReveal>
         </Link>
       </div>
@@ -241,7 +235,7 @@ export function FigmaHomeCarousel() {
       </div>
       <div className="home__work-portrait" aria-hidden="true">
         <ImageReveal fill>
-          <Image src="/figma-home/standing-portrait.png" alt="" fill sizes="(max-width: 700px) 0px, 40vw" />
+          <Image src={portraitImage} alt="" fill sizes="(max-width: 700px) 0px, 40vw" />
         </ImageReveal>
       </div>
     </div>

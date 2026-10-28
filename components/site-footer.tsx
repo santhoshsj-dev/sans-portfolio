@@ -2,10 +2,11 @@ import Image from "next/image";
 import { AnimatedLabel } from "@/components/animated-label";
 import { FooterRouteLink } from "@/components/footer-route-link";
 import { ImageReveal } from "@/components/image-reveal";
+import type { GlobalContent } from "@/lib/content";
 
 /* eslint @next/next/no-img-element: "off" */
 
-export function SiteFooter() {
+export function SiteFooter({ content }: { content: GlobalContent }) {
   return (
     <footer className="site-footer site-footer--home-layout">
       <div
@@ -14,7 +15,7 @@ export function SiteFooter() {
         aria-label="A crowd at a live event"
       >
         <ImageReveal fill>
-          <Image src="/figma-home/footer.png" alt="" fill sizes="100vw" />
+          <Image src={content.footerImage} alt="" fill sizes="100vw" />
         </ImageReveal>
       </div>
       <nav className="site-footer__nav" aria-label="Footer navigation">
@@ -31,69 +32,17 @@ export function SiteFooter() {
       <div className="site-footer__body">
         <div className="site-footer__social">
           <span>ELSEWHERE</span>
-          <a
-            href="https://in.linkedin.com/in/santhoshsj"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <AnimatedLabel>INSTAGRAM</AnimatedLabel>{" "}
-            <img
-              className="site-footer__light-asset"
-              src="/figma-home/external-arrow.svg"
-              alt=""
-            />
-            <img
-              className="site-footer__dark-asset"
-              src="/figma-home/external-arrow-dark.svg"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://designerdotsans.framer.website/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <AnimatedLabel>LINKEDIN</AnimatedLabel>{" "}
-            <img
-              className="site-footer__light-asset"
-              src="/figma-home/external-arrow.svg"
-              alt=""
-            />
-            <img
-              className="site-footer__dark-asset"
-              src="/figma-home/external-arrow-dark.svg"
-              alt=""
-            />
-          </a>
-          <a href="mailto:designerdotsans@gmail.com">
-            <AnimatedLabel>YOUTUBE</AnimatedLabel>{" "}
-            <img
-              className="site-footer__light-asset"
-              src="/figma-home/external-arrow.svg"
-              alt=""
-            />
-            <img
-              className="site-footer__dark-asset"
-              src="/figma-home/external-arrow-dark.svg"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://in.linkedin.com/in/santhoshsj"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <AnimatedLabel>X</AnimatedLabel>{" "}
-            <img
-              className="site-footer__light-asset"
-              src="/figma-home/external-arrow.svg"
-              alt=""
-            />
-            <img
-              className="site-footer__dark-asset"
-              src="/figma-home/external-arrow-dark.svg"
-              alt=""
-            />
+          {content.socialLinks.map(({ label, url }) => (
+            <a href={url} target="_blank" rel="noreferrer" key={label}>
+              <AnimatedLabel>{label}</AnimatedLabel>{" "}
+              <img className="site-footer__light-asset" src="/figma-home/external-arrow.svg" alt="" />
+              <img className="site-footer__dark-asset" src="/figma-home/external-arrow-dark.svg" alt="" />
+            </a>
+          ))}
+          <a href={`mailto:${content.contactEmail}`}>
+            <AnimatedLabel>{content.contactEmail}</AnimatedLabel>{" "}
+            <img className="site-footer__light-asset" src="/figma-home/external-arrow.svg" alt="" />
+            <img className="site-footer__dark-asset" src="/figma-home/external-arrow-dark.svg" alt="" />
           </a>
         </div>
         <div className="site-footer__statement">

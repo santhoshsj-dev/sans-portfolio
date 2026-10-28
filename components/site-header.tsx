@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AnimatedLabel } from "@/components/animated-label";
+import type { GlobalContent } from "@/lib/content";
 
 const links = [
   { href: "/about", label: "About" },
@@ -12,7 +13,7 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ content }: { content: Pick<GlobalContent, "contactEmail" | "menuPrompt" | "menuCta"> }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -118,12 +119,12 @@ export function SiteHeader() {
               ))}
             </div>
             <div className="site-menu__footer">
-              <span>HAVE A PROJECT IN MIND?</span>
+              <span>{content.menuPrompt || "HAVE A PROJECT IN MIND?"}</span>
               <div className="site-menu__actions">
-                <a href="mailto:designerdotsans@gmail.com">
-                  designerdotsans@gmail.com
+                <a href={`mailto:${content.contactEmail}`}>
+                  {content.contactEmail}
                 </a>
-                <a href="mailto:designerdotsans@gmail.com">LET’S TALK ↗</a>
+                <a href={`mailto:${content.contactEmail}`}>{content.menuCta || "LET’S TALK ↗"}</a>
               </div>
             </div>
           </nav>

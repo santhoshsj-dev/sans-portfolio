@@ -1,23 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ImageReveal } from "@/components/image-reveal";
+import { getSiteContent } from "@/lib/content";
 
-export function FigmaPageCallout() {
+export async function FigmaPageCallout() {
+  const { global } = await getSiteContent();
   return (
     <>
       <section className="figma-page__callout">
         <div className="figma-page__callout-title">
-          <span>WANT TO</span>
-          <h2>chat.</h2>
+          <span>{global.calloutEyebrow}</span>
+          <h2>{global.calloutTitle}</h2>
         </div>
         <div className="figma-page__callout-copy">
-          <p>Got a project in mind? I&apos;d love to hear about it.</p>
-          <Link href="/contact">CONTACT ME</Link>
+          <p>{global.calloutText}</p>
+          <Link href="/contact">{global.calloutLinkLabel}</Link>
         </div>
         <ImageReveal className="figma-page__callout-image">
           <Image
-            src="/figma-home/contact.png"
-            alt="A candid creative portrait"
+            src={global.calloutImage}
+            alt={global.calloutImageAlt}
             fill
             sizes="(max-width: 600px) 100vw, 692px"
           />

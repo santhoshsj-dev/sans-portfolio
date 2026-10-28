@@ -5,44 +5,21 @@ import { FigmaHomeCarousel } from "@/components/figma-home-carousel";
 import { HomeWorkMarquee } from "@/components/home-work-marquee";
 import { ImageReveal } from "@/components/image-reveal";
 import { ScrollMorphImage, ScrollMorphSlot } from "@/components/scroll-morph-image";
+import { getFeaturedProjects, getSiteContent } from "@/lib/content";
 
 /* eslint @next/next/no-img-element: "off" */
 
-const services = [
-  {
-    title: "Brand & visual identity",
-    items: ["Brand identity", "Art direction", "Packaging", "Campaigns"],
-    image: "/figma-home/service-design.png",
-    alt: "Visual identity and brand design work",
-  },
-  {
-    title: "Social & campaigns",
-    items: [
-      "Social content",
-      "Performance creative",
-      "Motion graphics",
-      "Campaign adaptation",
-    ],
-    image: "/figma-home/service-development.png",
-    alt: "Digital campaign work on a screen",
-  },
-  {
-    title: "Motion & live experiences",
-    items: ["Event identity", "Stage visuals", "Live events", "Editorial"],
-    image: "/figma-home/service-print.png",
-    alt: "Live event design and print work",
-  },
-];
-
-export default function HomePage() {
+export default async function HomePage() {
+  const [content, projects] = await Promise.all([getSiteContent(), getFeaturedProjects()]);
+  const { home, global } = content;
   return (
     <div className="home">
       <section className="home__hero" aria-label="Santhosh S. portfolio">
         <div className="home__hero-photos">
           <ImageReveal fill className="home__hero-photo home__hero-photo--left">
             <Image
-              src="/figma-home/hero-left.png"
-              alt="Two figures standing by the sea"
+              src={home.heroLeftImage}
+              alt={home.heroLeftImageAlt}
               fill
               priority
               sizes="(max-width: 700px) 70vw, 70vw"
@@ -50,8 +27,8 @@ export default function HomePage() {
           </ImageReveal>
           <ImageReveal fill staggerIndex={1} className="home__hero-photo home__hero-photo--right">
             <Image
-              src="/figma-home/hero-right.png"
-              alt="A solitary figure at the coast"
+              src={home.heroRightImage}
+              alt={home.heroRightImageAlt}
               fill
               priority
               sizes="(max-width: 700px) 30vw, 30vw"
@@ -63,9 +40,9 @@ export default function HomePage() {
             sans<span>.</span>
           </h1>
           <div className="home__identity-roles">
-            <span aria-label="Digital design"><AnimatedLabel>Digital design</AnimatedLabel></span>
-            <span aria-label="Development"><AnimatedLabel>Development</AnimatedLabel></span>
-            <span aria-label="Print design"><AnimatedLabel>Print design</AnimatedLabel></span>
+            {home.roles.map((role) => (
+              <span aria-label={role} key={role}><AnimatedLabel>{role}</AnimatedLabel></span>
+            ))}
           </div>
           <div className="home__identity-portrait">
             <img
@@ -108,15 +85,13 @@ export default function HomePage() {
             <h2>designer.</h2>
           </header>
           <ScrollMorphImage
-            src="/figma-home/introduction.png"
-            alt="Santhosh in a cinematic black-and-white portrait"
+            src={home.introImage}
+            alt={home.introImageAlt}
           >
             <div className="home__introduction">
               <div className="home__bio">
                 <p>
-                  I’m Santhosh, a Chennai-based graphic and motion designer. I
-                  create clear, characterful visual stories across brand identity,
-                  campaigns, social and live events.
+                  {home.introText}
                 </p>
                 <Link href="/about" className="home__outline-link" aria-label="Learn more">
                   <AnimatedLabel>LEARN MORE</AnimatedLabel>
@@ -133,8 +108,8 @@ export default function HomePage() {
             <span>SELECTED</span>
             <h2>works.</h2>
           </header>
-          <FigmaHomeCarousel />
-          <HomeWorkMarquee />
+          <FigmaHomeCarousel projects={projects} portraitImage={home.carouselPortrait} />
+          <HomeWorkMarquee label={global.workMarqueeLabel} />
         </section>
 
         <section className="home__section home__services">
@@ -143,7 +118,7 @@ export default function HomePage() {
             <h2>services.</h2>
           </header>
           <div className="home__service-list">
-            {services.map((service) => (
+            {home.services.map((service, index) => (
               <article className="home__service-row" key={service.title}>
                 <h3>{service.title}</h3>
                 <ul>
@@ -151,10 +126,10 @@ export default function HomePage() {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <ImageReveal className="home__service-image" staggerIndex={services.indexOf(service)}>
+                <ImageReveal className="home__service-image" staggerIndex={index}>
                   <Image
                     src={service.image}
-                    alt={service.alt}
+                    alt={service.imageAlt}
                     fill
                     sizes="(max-width: 700px) 33vw, 30vw"
                   />
@@ -166,20 +141,20 @@ export default function HomePage() {
 
         <section className="home__section home__contact" id="contact">
           <header className="home__section-heading">
-            <span>WANT TO</span>
-            <h2>chat.</h2>
+            <span>{global.calloutEyebrow}</span>
+            <h2>{global.calloutTitle}</h2>
           </header>
           <div className="home__contact-row">
             <div className="home__contact-copy">
-              <p>Have a project in mind? I’d love to hear about it.</p>
+              <p>{global.calloutText}</p>
               <Link href="/contact" className="home__outline-link" aria-label="Contact me">
                 <AnimatedLabel>CONTACT ME</AnimatedLabel>
               </Link>
             </div>
             <ImageReveal className="home__contact-image">
               <Image
-                src="/figma-home/contact.png"
-                alt="A quiet moment overlooking the city"
+                src={global.calloutImage}
+                alt={global.calloutImageAlt}
                 fill
                 sizes="(max-width: 700px) 100vw, 58vw"
               />

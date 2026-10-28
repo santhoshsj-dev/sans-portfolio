@@ -7,7 +7,7 @@ export function AnimatedLabel({ children }: AnimatedLabelProps) {
     Array.from(children).map((character, index) => (
       <span
         key={`${variant}-${index}`}
-        style={{ transitionDelay: `${index * 18}ms` }}
+        style={{ transitionDelay: `${index * 8}ms` }}
       >
         {character === " " ? "\u00a0" : character}
       </span>

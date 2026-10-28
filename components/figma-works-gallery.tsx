@@ -4,27 +4,17 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { ImageReveal } from "@/components/image-reveal";
 import { useMemo, useState } from "react";
-import { projects } from "@/lib/projects";
-
-const filters = [
-  "Printable",
-  "WordPress",
-  "Framer",
-  "Illustrations",
-  "Web Design",
-  "Motion Graphics",
-  "Social Media",
-];
+import type { Project } from "@/lib/projects";
 const imageByPalette: Record<string, string> = {
   red: "/figma-pages/works/tednercuts.png",
   ink: "/figma-pages/works/vermello.png",
   orange: "/figma-pages/works/tednercuts.png",
   cream: "/figma-pages/works/vermello.png",
 };
-const pageCount = 8;
 const pageSize = 2;
 
-function pageItems(currentPage: number): Array<number | "…"> {
+function pageItems(currentPage: number, pageCount: number): Array<number | "…"> {
+  if (pageCount <= 5) return Array.from({ length: pageCount }, (_, index) => index + 1);
   if (currentPage <= 3) return [1, 2, 3, "…", pageCount] as const;
   if (currentPage >= pageCount - 2)
     return [1, "…", pageCount - 2, pageCount - 1, pageCount] as const;
@@ -39,9 +29,9 @@ function pageItems(currentPage: number): Array<number | "…"> {
   ] as const;
 }
 
-export function FigmaWorksGallery() {
+export function FigmaWorksGallery({ projects, filters }: { projects: Project[]; filters: string[] }) {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
@@ -52,16 +42,14 @@ export function FigmaWorksGallery() {
         );
       return matchesFilter;
     });
-  }, [activeFilter]);
+  }, [activeFilter, projects]);
 
   const visibleProjects = useMemo(() => {
     if (!filteredProjects.length) return [];
-    const start = ((page - 1) * pageSize) % filteredProjects.length;
-    return Array.from(
-      { length: Math.min(pageSize, filteredProjects.length) },
-      (_, index) => filteredProjects[(start + index) % filteredProjects.length],
-    );
+    const start = (page - 1) * pageSize;
+    return filteredProjects.slice(start, start + pageSize);
   }, [filteredProjects, page]);
+  const pageCount = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
 
   const setFilter = (value: string) => {
     setActiveFilter((current) => (current === value ? null : value));
@@ -96,9 +84,10 @@ export function FigmaWorksGallery() {
             >
               <ImageReveal className="figma-works__card-image" staggerIndex={visibleProjects.indexOf(project) % 2}>
                 <NextImage
-                  src={imageByPalette[project.palette]}
-                  alt={`${project.title} project`}
+                  src={project.cardImage || imageByPalette[project.palette]}
+                  alt={project.cardImageAlt || `${project.title} project`}
                   fill
+                  unoptimized={Boolean(project.cardImage?.endsWith(".svg"))}
                   sizes="(max-width: 600px) 100vw, 50vw"
                 />
               </ImageReveal>
@@ -123,7 +112,7 @@ export function FigmaWorksGallery() {
           >
             PREVIOUS
           </button>
-          {pageItems(page).map((item, index) =>
+          {pageItems(page, pageCount).map((item, index) =>
             item === "…" ? (
               <span key={`ellipsis-${index}`} aria-hidden="true">
                 …

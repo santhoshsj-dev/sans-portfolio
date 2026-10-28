@@ -1580,6 +1580,11 @@ textarea:focus-visible {
 .project-page__story-gallery .project-art {
   min-height: 230px;
 }
+.project-page__story-gallery-image {
+  position: relative;
+  min-height: 230px;
+  overflow: hidden;
+}
 .project-page__related-row {
   border-top: 1px solid var(--line);
   padding-top: 14px;
@@ -2408,6 +2413,27 @@ textarea:focus-visible {
   padding: 18px 22px;
   border-bottom: var(--rule);
   font-size: 16px;
+  transition:
+    min-height 380ms var(--motion-ease-ui),
+    background-color 220ms var(--motion-ease-ui);
+}
+.figma-about__experience-list article:focus-visible {
+  outline: 1px solid var(--page-ink);
+  outline-offset: -4px;
+}
+.figma-about__experience-list article:focus {
+  min-height: 150px;
+  background-color: color-mix(in srgb, var(--page-ink) 4%, var(--page-bg));
+}
+@media (hover: hover) and (pointer: fine) {
+  .figma-about__experience-list article:hover {
+    min-height: 150px;
+    background-color: color-mix(in srgb, var(--page-ink) 4%, var(--page-bg));
+  }
+}
+.figma-about__experience-list article:focus-within {
+  min-height: 150px;
+  background-color: color-mix(in srgb, var(--page-ink) 4%, var(--page-bg));
 }
 .figma-about__experience-date {
   color: var(--page-muted);
@@ -6129,8 +6155,218 @@ body {
   position: fixed;
   inset: 0 0 auto;
   z-index: 30;
+  view-transition-name: site-header;
 }
 
 main {
   padding-top: 53px;
+}
+
+/* Shared motion scale for the grid-based portfolio UI. */
+:root {
+  --motion-duration-fast: 220ms;
+  --motion-duration-detail: 400ms;
+  --motion-duration-page: 800ms;
+  --motion-ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-page: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.animated-label__line > span {
+  transition-duration: 360ms;
+}
+
+.figma-works__filters button,
+.figma-contact .contact-form .button,
+.figma-page__bio a,
+.figma-about__bio a,
+.figma-page__callout-copy a,
+.about-editorial__link,
+.works-editorial__link {
+  transition-duration: var(--motion-duration-fast);
+}
+
+.figma-works__card-image img {
+  transition-duration: var(--motion-duration-detail);
+  transition-timing-function: var(--motion-ease-ui);
+}
+
+.figma-works__card-info {
+  transition-duration: var(--motion-duration-detail);
+  transition-timing-function: var(--motion-ease-ui);
+}
+
+.home__project-panel--active .home__project-title-row,
+.home__project-panel--active .home__project-tags,
+.home__project-panel--active .home__project-link {
+  animation: home-project-caption-settle var(--motion-duration-detail)
+    var(--motion-ease-ui) both;
+}
+
+.home__project-panel--active .home__project-tags {
+  animation-delay: 35ms;
+}
+
+.home__project-panel--active .home__project-link {
+  animation-delay: 60ms;
+}
+
+.home__project-panel--active .home__work-image {
+  animation: home-project-image-settle var(--motion-duration-detail)
+    var(--motion-ease-ui) both;
+}
+
+@keyframes home-project-caption-settle {
+  from {
+    opacity: 0.72;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-project-image-settle {
+  from {
+    transform: scale(1.012);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.home__service-row {
+  transition-duration: 440ms;
+  transition-timing-function: var(--motion-ease-page);
+}
+
+.home__service-image img {
+  transition-duration: var(--motion-duration-detail);
+  transition-timing-function: var(--motion-ease-ui);
+}
+
+.home__outline-link,
+.home__project-controls button,
+.home__work-marquee {
+  transition-duration: var(--motion-duration-fast);
+}
+
+.home__marquee-track {
+  animation-duration: 34s;
+}
+
+.figma-contact .contact-form {
+  position: relative;
+}
+
+.figma-contact .contact-form > label {
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-ui),
+    border-color var(--motion-duration-fast) var(--motion-ease-ui);
+}
+
+.figma-contact .contact-form > label:focus-within {
+  background-color: color-mix(in srgb, var(--page-ink) 3%, var(--page-bg));
+  border-bottom-color: var(--page-ink);
+}
+
+.figma-contact .contact-form input,
+.figma-contact .contact-form textarea {
+  transition: color var(--motion-duration-fast) var(--motion-ease-ui);
+}
+
+.figma-contact .contact-form__message {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: 76px;
+  max-width: min(420px, calc(100% - 24px));
+  margin: 0;
+  padding: 7px 10px;
+  background: var(--page-bg);
+  color: var(--page-ink);
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  animation: contact-feedback-in var(--motion-duration-fast) var(--motion-ease-ui)
+    both;
+}
+
+@keyframes contact-feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .figma-contact .contact-form__message {
+    right: 10px;
+    bottom: 74px;
+    left: 10px;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home__marquee-track {
+    animation: none !important;
+  }
+
+  .home__marquee-group:nth-child(2) {
+    display: none;
+  }
+}
+
+/* Fade route content while the shared header remains outside the transition. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(site-header) {
+  z-index: 100;
+  animation: none;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-group(.page-fade) {
+  animation-duration: 1000ms;
+}
+
+::view-transition-old(.page-fade) {
+  animation: page-content-fade-out 350ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(.page-fade) {
+  animation: page-content-fade-in 650ms cubic-bezier(0, 0, 0.2, 1) 350ms both;
+}
+
+@keyframes page-content-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes page-content-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(.page-fade),
+  ::view-transition-old(.page-fade),
+  ::view-transition-new(.page-fade) {
+    animation: none !important;
+  }
 }

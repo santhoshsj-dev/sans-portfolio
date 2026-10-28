@@ -2,9 +2,12 @@
 
 import { FormEvent, useState } from "react";
 
-const email = "santhoshsekar2903@gmail.com";
+type ContactFormProps = {
+  email: string;
+  labels: { nameLabel: string; emailLabel: string; phoneLabel: string; messageLabel: string; submitLabel: string };
+};
 
-export function ContactForm() {
+export function ContactForm({ email, labels }: ContactFormProps) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -15,10 +18,12 @@ export function ContactForm() {
     const phone = String(data.get("phone") || "").trim();
     const message = String(data.get("message") || "").trim();
     if (!name || !from || !message) {
+      setSent(false);
       setError("Please complete each field before sending.");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from)) {
+      setSent(false);
       setError("Please enter a valid email address.");
       return;
     }
@@ -28,14 +33,20 @@ export function ContactForm() {
   }
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate autoComplete="off">
-      <label>NAME*<input name="name" autoComplete="off" required /></label>
-      <label>EMAIL*<input name="email" type="email" autoComplete="off" required /></label>
-      <label className="contact-form__phone-field">PHONE*<input name="phone" type="tel" autoComplete="off" /></label>
-      <label>MESSAGE*<textarea name="message" rows={4} required /></label>
-      {error && <p className="contact-form__message" role="alert">{error}</p>}
-      {sent && <p className="contact-form__message" role="status">Your email app should open with a draft ready to send.</p>}
+      <label>{labels.nameLabel}<input name="name" autoComplete="off" required /></label>
+      <label>{labels.emailLabel}<input name="email" type="email" autoComplete="off" required /></label>
+      <label className="contact-form__phone-field">{labels.phoneLabel}<input name="phone" type="tel" autoComplete="off" /></label>
+      <label>{labels.messageLabel}<textarea name="message" rows={4} required /></label>
+      {(error || sent) && (
+        <p
+          className={`contact-form__message ${error ? "contact-form__message--error" : "contact-form__message--success"}`}
+          role={error ? "alert" : "status"}
+        >
+          {error || "Your email app should open with a draft ready to send."}
+        </p>
+      )}
       <div className="contact-form__submit-row">
-        <button className="button button--dark" type="submit">SUBMIT</button>
+        <button className="button button--dark" type="submit">{labels.submitLabel}</button>
       </div>
     </form>
   );

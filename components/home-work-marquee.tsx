@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function HomeWorkMarquee() {
+export function HomeWorkMarquee({ label = "VIEW ALL WORKS" }: { label?: string }) {
   return (
     <Link
       href="/works"
@@ -11,7 +11,7 @@ export function HomeWorkMarquee() {
         {[0, 1].map((group) => (
           <span className="home__marquee-group" key={group}>
             {Array.from({ length: 8 }, (_, index) => (
-              <span key={index}>/　 VIEW ALL WORKS</span>
+              <span key={index}>/　 {label}</span>
             ))}
           </span>
         ))}

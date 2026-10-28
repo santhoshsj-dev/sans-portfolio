@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { projects, getProject } from "@/lib/projects";
+import { getProject, getProjects } from "@/lib/content";
 import { ProjectArt } from "@/components/project-art";
 import { AnimatedLabel } from "@/components/animated-label";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return projects.map((project) => ({ slug: project.slug }));
 }
+
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -15,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  return { title: getProject(slug)?.title ?? "Project" };
+  return { title: (await getProject(slug))?.title ?? "Project" };
 }
 
 export default async function ProjectPage({
@@ -24,7 +28,8 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const projects = await getProjects();
+  const project = await getProject(slug);
   if (!project) notFound();
   const index = projects.findIndex((item) => item.slug === slug);
   const next = projects[(index + 1) % projects.length];
@@ -88,19 +93,16 @@ export default async function ProjectPage({
           <span className="type__eyebrow">THE OUTCOME</span>
           <h2>{project.outcome}</h2>
           <p>{project.description}</p>
-          <span className="project-page__story-note">
-            Project imagery and detailed process copy are replaceable
-            placeholders pending approved case study assets.
-          </span>
+          {!project.gallery?.length && <span className="project-page__story-note">Add project gallery images in the portfolio CMS.</span>}
           <div className="project-page__story-gallery">
-            <ProjectArt project={project} compact />
-            <ProjectArt
-              project={{
-                ...project,
-                palette: projects[(index + 1) % projects.length].palette,
-              }}
-              compact
-            />
+            {project.gallery?.length ? project.gallery.map(({ src, alt }, imageIndex) => (
+              <div className="project-page__story-gallery-image" key={`${src}-${imageIndex}`}>
+                <Image src={src} alt={alt || `${project.title} project image`} fill sizes="(max-width: 700px) 100vw, 35vw" unoptimized={src.endsWith(".svg")} />
+              </div>
+            )) : <>
+              <ProjectArt project={project} compact />
+              <ProjectArt project={{ ...project, palette: projects[(index + 1) % projects.length].palette }} compact />
+            </>}
           </div>
           <div className="project-page__related-row">
             <span>RELATED SERVICES</span>
