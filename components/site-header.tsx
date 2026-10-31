@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AnimatedLabel } from "@/components/animated-label";
 import type { GlobalContent } from "@/lib/content";
 
@@ -18,6 +18,7 @@ export function SiteHeader({ content }: { content: Pick<GlobalContent, "contactE
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const [time, setTime] = useState("--:--");
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const update = () =>
@@ -84,10 +85,23 @@ export function SiteHeader({ content }: { content: Pick<GlobalContent, "contactE
       </AnimatePresence>
       <AnimatePresence>
         {open && (
-          <nav
+          <motion.nav
             id="primary-navigation"
             className="site-menu"
             aria-label="Main navigation"
+            initial={reduceMotion ? false : { x: "100%" }}
+            animate={{
+              x: 0,
+              transition: reduceMotion
+                ? { duration: 0 }
+                : { duration: 0.52, ease: [0.22, 1, 0.36, 1] },
+            }}
+            exit={{
+              x: reduceMotion ? 0 : "100%",
+              transition: reduceMotion
+                ? { duration: 0 }
+                : { duration: 0.4, ease: [0.4, 0, 1, 1] },
+            }}
           >
             <div className="site-menu__header">
               <button
@@ -121,13 +135,10 @@ export function SiteHeader({ content }: { content: Pick<GlobalContent, "contactE
             <div className="site-menu__footer">
               <span>{content.menuPrompt || "HAVE A PROJECT IN MIND?"}</span>
               <div className="site-menu__actions">
-                <a href={`mailto:${content.contactEmail}`}>
-                  {content.contactEmail}
-                </a>
                 <a href={`mailto:${content.contactEmail}`}>{content.menuCta || "LET’S TALK ↗"}</a>
               </div>
             </div>
-          </nav>
+          </motion.nav>
         )}
       </AnimatePresence>
     </>

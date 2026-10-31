@@ -39,11 +39,6 @@ export function SiteFooter({ content }: { content: GlobalContent }) {
               <img className="site-footer__dark-asset" src="/figma-home/external-arrow-dark.svg" alt="" />
             </a>
           ))}
-          <a href={`mailto:${content.contactEmail}`}>
-            <AnimatedLabel>{content.contactEmail}</AnimatedLabel>{" "}
-            <img className="site-footer__light-asset" src="/figma-home/external-arrow.svg" alt="" />
-            <img className="site-footer__dark-asset" src="/figma-home/external-arrow-dark.svg" alt="" />
-          </a>
         </div>
         <div className="site-footer__statement">
           © {new Date().getFullYear()} SANS. ALL RIGHTS RESERVED.
